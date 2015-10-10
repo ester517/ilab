@@ -1,8 +1,8 @@
-#include <stdio.h>
-#define N 1000
-
-void bubblesort(int *a, int n) 
+#include "sort.h"
+clock_t bubblesort(int *a, int n) 
 {
+	clock_t t = NULL;
+	t = clock();
 	int i = 0, j = 0;
 	for(i = n - 1 ; i >= 0; i--) 
 	{
@@ -16,10 +16,14 @@ void bubblesort(int *a, int n)
 			}
 		}
 	}
+	t = clock() - t;
+	return t;
 }
 
-void quickSort(int * a, int b, int e) 
+clock_t quickSort(int * a, int b, int e) 
 { 
+	clock_t t = NULL;
+	t = clock();
 	int l = b, r = e; 		
 	int p = a[(l + r) / 2 ];		
 	do
@@ -35,5 +39,7 @@ void quickSort(int * a, int b, int e)
 	} while (l <= r); 
 	if ( b < r ) quickSort(a, b, r);
 	if ( e > l ) quickSort(a, l, e);
+	t = clock() - t;
+	return t;
 }
 
