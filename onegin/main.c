@@ -3,26 +3,32 @@
 #include <string.h> 
 #include "onegin.h"
 
-#define MAXLINE 4096 
-#define IFNAME "onegin.txt" 
-#define OFNAME "onegin_sort.txt" 
-
 int main(void) 
-{ 
+{
 	FILE *ifp, *ofp; 
-	char *lineptr[MAXLINE]; 
+	char **lineptr = (char**)(calloc(MAXLINE,sizeof(char)));
 	char s[MAXLINE]; 
-	int i, nl; 
+	int i, nl, n = 1; 
 
 	ifp = fopen(IFNAME, "r");
 	if (ifp == NULL) 
-	ex_handler(); 
+	{
+		fclose(ifp);  
+		ex_handler(); 
+	}
 	ofp = fopen(OFNAME, "w");
 	if (ofp == NULL) 
-	ex_handler(); 
-
+	{
+		fclose(ifp); 
+		fclose(ofp); 
+		ex_handler(); 
+	}
 	for(i = 0; i < MAXLINE; )
 	{ 
+		if ( (i - 1) % MAXLINE == 0){ 
+			n = n + 1;
+			lineptr = (char**)(realloc(lineptr, MAXLINE*n));
+		}
 		if(fgets(s, MAXLINE, ifp) == NULL) 
 		break; 
 	
