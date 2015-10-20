@@ -9,6 +9,7 @@ int main(void)
 	char **lineptr = (char**)(calloc(MAXLINE,sizeof(char)));
 	char s[MAXLINE]; 
 	int i, nl, n = 1; 
+	int max = MAXLINE;
 
 	ifp = fopen(IFNAME, "r");
 	if (ifp == NULL) 
@@ -23,11 +24,12 @@ int main(void)
 		fclose(ofp); 
 		ex_handler(); 
 	}
-	for(i = 0; i < MAXLINE; )
+	for(i = 0; i < max; )
 	{ 
 		if ( (i - 1) % MAXLINE == 0){ 
 			n = n + 1;
-			lineptr = (char**)(realloc(lineptr, MAXLINE*n));
+			max = max*n;
+			lineptr = (char**)(realloc(lineptr, max));
 		}
 		if(fgets(s, MAXLINE, ifp) == NULL) 
 		break; 
