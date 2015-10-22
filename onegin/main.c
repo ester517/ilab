@@ -26,7 +26,7 @@ int main(void)
 	}
 	for(i = 0; i < max; )
 	{ 
-		if ( (i - 1) % MAXLINE == 0){ 
+		if ( (i - 1) % max == 0){ 
 			n = n + 1;
 			max = max*n;
 			lineptr = (char**)(realloc(lineptr, max));
