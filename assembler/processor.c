@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include "stack.h"
 #include "assembler.h"
+char OFNAME[256];
 int main()
-{
+{ 
 	int i;
+	printf("Name of file.bin:\n");
+	scanf("%s", OFNAME);
 	ofp = fopen(OFNAME, "rb");
 	fread(&i, sizeof(int), 1, ofp);
 	int *mas = (int *)calloc(i, sizeof(int));
@@ -16,47 +19,32 @@ int main()
 	init(&s);
 	while (j != i)
 	{
-		if (mas[j] == 1)
+		if (mas[j] == cpush)
 		{
 			j++;
-			push(&s, mas[j]);
-			j++; 
+			push(&s, mas[j]); 
 		} else
-		if (mas[j] == 2)
-		{
+		if (mas[j] == cpop)
 			c = pop(&s);
-			j++;
-		} else
-		if (mas[j] == 3)
-		{
+		else
+		if (mas[j] == cadd)
 			add(&s);
-			j++;
-		} else
-		if (mas[j] == 4)
-		{
-			sub(&s);
-			j++; 
-		} else
-		if (mas[j] == 5)
-		{
-			mul(&s);
-			j++; 
-		} else
-		if (mas[j] == 6)
-		{
-			diiv(&s);
-			j++; 
-		} else
-		if (mas[j] == 7)
-		{
-			print(&s);
-			j++; 
-		} else
-		if (mas[j] == 8)
-		{
-			end(&s);
-			j++; 
-		}
+		else
+		if (mas[j] == csub)
+			sub(&s); 
+		else
+		if (mas[j] == cmul)
+			mul(&s); 
+		else
+		if (mas[j] == cdiv)
+			diiv(&s); 
+		else
+		if (mas[j] == cprint)
+			print(&s); 
+		else
+		if (mas[j] == cend)
+			end(&s); 
+	j++;
 	}	
 	return 0;
 }

@@ -1,4 +1,5 @@
 #include "assembler.h"
+char OFNAME[256], IFNAME[256];
 void check( int *mas, int i, int *n)
 {
 	if (i == *n)
@@ -10,7 +11,11 @@ void check( int *mas, int i, int *n)
 }
 int main()
 {
-	ifp = fopen(IFNAME, "rb");
+	printf("Name of iffile:\n");
+	scanf("%s", IFNAME);
+	printf("Name of offile:\n");
+	scanf("%s", OFNAME);
+	ifp = fopen(IFNAME, "r");
 	ofp = fopen(OFNAME, "wb");
 	char* cmd;
 	int c;
@@ -22,7 +27,7 @@ int main()
 		check(mas, i, &n); \
 		mas[i] = num;\
 		i++;\
-		if (num == 1)\
+		if ((num == 1)||(num == 9)||(num == 13)||(num == 14)||(num == 15))\
 		{\
 			check(mas, i, &n); \
 			fscanf(ifp, "%d", &c);\

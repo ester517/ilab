@@ -101,4 +101,3 @@ bool diiv( stack *s)
 	}
 	return false;
 }
-
