@@ -3,7 +3,8 @@
 #include <stdlib.h>
 FILE *ifp, *ifp1, *ofp; 
 void check( int *mas, int i, int *n);
-enum cmd 
+int label[5];
+enum comd 
 {
 	cpush = 1,
 	cpop = 2, 
@@ -16,8 +17,19 @@ enum cmd
 	cmov = 9,
 	cpush_x = 10,
 	cpop_x = 11,
-	cinc = 12,
+	cin = 12,
 	cjmp = 13,
-	cine = 14,
-	cje = 15
+	cjne = 14,
+	cje = 15,
+	cadd_x = 16,
+	csub_x = 17,
+	cmul_x = 18,
+	cdiv_x = 19,
+	ccmp = 20,
+	cout = 21,
+	ccal = 22,
+	cret = 23,
+	cprint_x = 24,
+	cinc = 25,
+	cdec = 26
 };

@@ -19,31 +19,146 @@ int main()
 	ofp = fopen(OFNAME, "wb");
 	char* cmd;
 	int c;
+	char s;
+	int f;
+	int k = 0;
+	for (k = 0; k < 5; k++)
+		label[k] = -1;
 	int *mas = (int *)calloc(128, sizeof(int));
 	int n = 128;
 	int i = 0;
-	#define DEF_CMD(name, num) if (!strcmp(cmd, name))\
+	k = 0;
+	while (fscanf(ifp, "%s", cmd) != EOF)
+	{
+		if ((cmd[0] == ':')&&(label[cmd[1] - '0' - 1 ] == -1))
+			label[cmd[1] - '0' - 1] = k;
+		k++;
+	}
+	fclose(ifp);
+	#define DEF_CMD(name, num, arc) if (!strcmp(cmd, name))\
 	{\
 		check(mas, i, &n); \
 		mas[i] = num;\
 		i++;\
-		if ((num == 1)||(num == 9)||(num == 13)||(num == 14)||(num == 15))\
+		if (arc == 1)\
 		{\
-			check(mas, i, &n); \
-			fscanf(ifp, "%d", &c);\
-			mas[i] = c;\
-			i++; \
+			if ((num == cpush_x) || (num == cpop_x) || (num == cprint_x) || (num == cinc) || (num == cdec))\
+			{\
+				check(mas, i, &n); \
+				fscanf(ifp, "%c", &s);\
+				fscanf(ifp, "%c", &s);\
+				if (s == 'a')\
+				{\
+					check(mas, i, &n); \
+					mas[i] = 1;\
+					i++; \
+				}\
+				if (s == 'b')\
+				{\
+					check(mas, i, &n); \
+					mas[i] = 2;\
+					i++; \
+				}\
+				if (s == 'c')\
+				{\
+					check(mas, i, &n); \
+					mas[i] = 3;\
+					i++; \
+				}\
+			} else \
+			if ((num == cjmp) || (num == cje) || (num == cjne) || (num == ccal) || (num == cret))\
+			{\
+				check(mas, i, &n);\
+				fscanf(ifp, "%c", &s);\
+				fscanf(ifp, "%s", cmd);\
+				if (cmd[1] == '1')\
+					mas[i] = 1;\
+				if (cmd[1] == '2')\
+					mas[i] = 2;\
+				if (cmd[1] == '3')\
+					mas[i] = 3;\
+				if (cmd[1] == '4')\
+					mas[i] = 4;\
+				i++;\
+			}\
+			else \
+			{\
+				check(mas, i, &n); \
+				fscanf(ifp, "%d", &c);\
+				mas[i] = c;\
+				i++;\
+			}\
+		} else \
+		if (arc == 2)\
+		{\
+			if (num == ccmp)\
+			{\
+				check(mas, i, &n); \
+				fscanf(ifp, "%c", &s);\
+				fscanf(ifp, "%c", &s);\
+				if (s == 'a')\
+				{\
+					check(mas, i, &n); \
+					mas[i] = 1;\
+					i++; \
+				}\
+				if (s == 'b')\
+				{\
+					check(mas, i, &n); \
+					mas[i] = 2;\
+					i++; \
+				}\
+				if (s == 'c')\
+				{\
+					check(mas, i, &n); \
+					mas[i] = 3;\
+					i++; \
+				}\
+				check(mas, i, &n); \
+				fscanf(ifp, "%d", &c);\
+				mas[i] = c;\
+				i++;\
+			} else \
+			{\
+				for (f = 0; f < 2; f++)\
+				{\
+					check(mas, i, &n); \
+					fscanf(ifp, "%c", &s);\
+					fscanf(ifp, "%c", &s);\
+					if (s == 'a')\
+					{\
+						check(mas, i, &n); \
+						mas[i] = 1;\
+						i++; \
+					}\
+					if (s == 'b')\
+					{\
+						check(mas, i, &n); \
+						mas[i] = 2;\
+						i++; \
+					}\
+					if (s == 'c')\
+					{\
+						check(mas, i, &n); \
+						mas[i] = 3;\
+						i++; \
+					}\
+				}\
+			}\
 		}\
-	} else
-	
+	} else \
+		if (cmd[0] == ':') i = i;\
+	else 
+	ifp = fopen(IFNAME, "r");
 	while (fscanf(ifp, "%s", cmd) != EOF)
 	{	
 		#include "cmdlist.h"
 		printf("error");
 	}
 	#undef DEF_CMD
-	
 	fclose(ifp);
+	for (k = 0; k < 5; k++)
+		fwrite(&label[k], sizeof(int), 1, ofp);
 	fwrite(&i, sizeof(int), 1, ofp);
 	fwrite( mas, sizeof(int), i, ofp);
 	fclose(ofp);
