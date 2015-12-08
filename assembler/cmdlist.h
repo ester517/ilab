@@ -21,7 +21,7 @@ DEF_CMD("cmp", 20, 2)
 DEF_CMD("out", 21, 0)
 
 DEF_CMD("cal", 22, 1)
-DEF_CMD("ret", 23, 1)
+DEF_CMD("ret", 23, 0)
 
 DEF_CMD("print_x", 24, 1)
 DEF_CMD("inc", 25, 1)

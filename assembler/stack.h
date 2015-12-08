@@ -33,3 +33,5 @@ void dec (int a, int *mas);
 void inc (int a, int *mas);
 int je (int a, int j, int c);
 int jne (int a, int j, int c);
+int cal (int a, int j);
+int ret (int a, int j);

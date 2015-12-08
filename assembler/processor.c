@@ -46,9 +46,6 @@ int main()
 		else
 		if (mas[j] == cprint)
 			print(&s); 
-		else
-		if (mas[j] == cend)
-			end(&s); 
 		else 
 		if (mas[j] == cpush_x)
 		{
@@ -154,6 +151,25 @@ int main()
 			j = jne(label[mas[j] - 1], j, cmp_ans);
 			j--;
 			if (r == j) j++;
+		} 
+		else
+		if (mas[j] == ccal)
+		{
+			r = j;
+			j++;
+			j = cal(label[mas[j] - 1], j);
+		}
+		else
+		if (mas[j] == cret)
+		{
+			j = ret(r, j);
+		j++;
+		}
+		else
+		if (mas[j] == cend)
+		{
+			end(&s);
+			j = i - 1;
 		}
 	j++;
 	}	

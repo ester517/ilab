@@ -17,7 +17,7 @@ int main()
 	scanf("%s", OFNAME);
 	ifp = fopen(IFNAME, "r");
 	ofp = fopen(OFNAME, "wb");
-	char* cmd;
+	char* cmd = calloc(7, sizeof(char));
 	int c;
 	char s;
 	int f;
@@ -28,10 +28,13 @@ int main()
 	int n = 128;
 	int i = 0;
 	k = 0;
+	char *cmd1 = calloc(7, sizeof(char));
+	fscanf(ifp, "%s", cmd1);
 	while (fscanf(ifp, "%s", cmd) != EOF)
 	{
-		if ((cmd[0] == ':')&&(label[cmd[1] - '0' - 1 ] == -1))
+		if ((cmd[0] == ':')&&(label[cmd[1] - '0' - 1 ] == -1)&&(cmd1[0] != 'c'))
 			label[cmd[1] - '0' - 1] = k;
+		cmd1 = cmd;	
 		k++;
 	}
 	fclose(ifp);
@@ -66,18 +69,18 @@ int main()
 					i++; \
 				}\
 			} else \
-			if ((num == cjmp) || (num == cje) || (num == cjne) || (num == ccal) || (num == cret))\
+			if ((num == cjmp) || (num == cje) || (num == cjne) || (num == ccal))\
 			{\
 				check(mas, i, &n);\
 				fscanf(ifp, "%c", &s);\
 				fscanf(ifp, "%s", cmd);\
-				if (cmd[1] == '1')\
+				if (cmd[0] == '1')\
 					mas[i] = 1;\
-				if (cmd[1] == '2')\
+				if (cmd[0] == '2')\
 					mas[i] = 2;\
-				if (cmd[1] == '3')\
+				if (cmd[0] == '3')\
 					mas[i] = 3;\
-				if (cmd[1] == '4')\
+				if (cmd[0] == '4')\
 					mas[i] = 4;\
 				i++;\
 			}\
@@ -163,5 +166,6 @@ int main()
 	fwrite( mas, sizeof(int), i, ofp);
 	fclose(ofp);
 	free(mas);
+	free(cmd1);
 	return 0;
 }

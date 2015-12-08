@@ -180,3 +180,13 @@ int jne (int a, int j, int c)
 	j = a;
 	return j;
 }
+int cal (int a, int j)
+{	
+	j = a;
+	return j;
+}
+int ret (int a, int j)
+{
+	j = a;
+	return j;
+}
