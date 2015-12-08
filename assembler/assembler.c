@@ -33,7 +33,7 @@ int main()
 	while (fscanf(ifp, "%s", cmd) != EOF)
 	{
 		if ((cmd[0] == ':')&&(label[cmd[1] - '0' - 1 ] == -1)&&(cmd1[0] != 'c'))
-			label[cmd[1] - '0' - 1] = k;
+			label[cmd[1] - '0' - 1] = k + 1;
 		cmd1 = cmd;	
 		k++;
 	}

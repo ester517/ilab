@@ -158,6 +158,7 @@ int main()
 			r = j;
 			j++;
 			j = cal(label[mas[j] - 1], j);
+			j--;
 		}
 		else
 		if (mas[j] == cret)
