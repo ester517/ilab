@@ -8,6 +8,7 @@ class cstack
 		int count;
 		int allocatedMemory;
 		double *arr;
+		static int stackNumber;  
 	public:
 		cstack();
 		cstack(int size);
